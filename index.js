@@ -38,4 +38,19 @@ app.get("/health", async (req, res) => {
       .json({ error: "Something went wrong! Please try again later." });
   });
   
+  app.listen(process.env.PORT, () => {
+    mongoose
+      .connect(process.env.url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        console.log("MongoDB Connected");
+        console.log(`App listening at http://localhost:${process.env.PORT}`);
+      })
+      .catch((err) => {
+        console.log("failed to connect", err);
+      });
+  });
+
   module.exports = app;
